@@ -88,8 +88,8 @@ PROCESS_THREAD(unicast_sender_process, ev, data)
     etimer_reset(&periodic_timer);
 
     // Reset the receiver mote to get the IPv6 address, e.g. fe80::212:7400:16c0:8826
-    uip_ip6addr(&addr, 0xfe80, 0, 0, 0, 0x0212, 0x7400, 0x16c0, 0x8826);  
-    //uip_ip6addr(&addr, 0xfe80, 0, 0, 0, 0xc30c, 0, 0, 0x0003);    
+    //uip_ip6addr(&addr, 0xfe80, 0, 0, 0, 0x0212, 0x7400, 0x16c0, 0x8826); 
+    uip_ip6addr(&addr, 0xfe80, 0, 0, 0, 0xc30c, 0, 0, 0x0064);    
 
     static unsigned int message_number;
     char buf[300];
@@ -98,6 +98,7 @@ PROCESS_THREAD(unicast_sender_process, ev, data)
     uip_debug_ipaddr_print(&addr);
     printf("\n");
     sprintf(buf, "Message %d", message_number);
+
     message_number++;
     simple_udp_sendto(&unicast_connection, buf, strlen(buf) + 1, &addr);
   }
